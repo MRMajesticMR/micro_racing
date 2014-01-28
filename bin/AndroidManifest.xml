@@ -23,6 +23,16 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        
+        <activity
+            android:name=".activities.GameFieldActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        
     </application>
 
 </manifest>
