@@ -1,16 +1,19 @@
 package ru.majestic.microracing.activities;
 
+import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.ui.activity.BaseGameActivity;
 
+import ru.majestic.microracing.game.layers.LayersManager;
 import ru.majestic.microracing.utils.MRCamera;
 import ru.majestic.microracing.utils.MREngineOptions;
+import ru.majestic.microracing.utils.MRScene;
 
-public class GameFieldActivity extends SimpleBaseGameActivity {        
+public class GameFieldActivity extends BaseGameActivity {        
    
-   private MRCamera camera;      
+   private Camera camera; 
+   private LayersManager layersManager;
 
    @Override
    public EngineOptions onCreateEngineOptions() {      
@@ -20,15 +23,22 @@ public class GameFieldActivity extends SimpleBaseGameActivity {
    }
 
    @Override
-   protected void onCreateResources() {
-      
+   public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
+      layersManager = new LayersManager();
+      pOnCreateResourcesCallback.onCreateResourcesFinished();
    }
 
    @Override
-   protected Scene onCreateScene() {
-      Scene scene = new Scene();
-      scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));      
-      return scene;
+   public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
+      final Scene scene = new MRScene();
+      
+      pOnCreateSceneCallback.onCreateSceneFinished(scene);
+   }
+
+   @Override
+   public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
+      layersManager.addLayersToScene(pScene);
+      pOnPopulateSceneCallback.onPopulateSceneFinished();
    }      
 
 
