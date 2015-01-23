@@ -9,7 +9,7 @@ import org.andengine.engine.options.resolutionpolicy.IResolutionPolicy;
 public class GameEngineOptions extends EngineOptions {
 
    private static final boolean              FULL_SCREEN          = true;
-   private static final ScreenOrientation    SCREEN_ORIENTATION   = ScreenOrientation.LANDSCAPE_FIXED;
+   private static final ScreenOrientation    SCREEN_ORIENTATION   = ScreenOrientation.PORTRAIT_FIXED;
    private static final IResolutionPolicy    RESOLUTION_POLICY    = new FillResolutionPolicy();
 
    public GameEngineOptions(Camera camera) {

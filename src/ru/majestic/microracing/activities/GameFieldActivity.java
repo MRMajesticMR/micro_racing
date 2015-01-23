@@ -4,12 +4,14 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import ru.majestic.microracing.activities.controllers.GameStateController;
 import ru.majestic.microracing.andengine.GameCamera;
 import ru.majestic.microracing.andengine.GameEngineOptions;
 import ru.majestic.microracing.andengine.GameScene;
+import ru.majestic.microracing.resources.ResourceManager;
 
 public class GameFieldActivity extends BaseGameActivity implements GameStateController {
 
@@ -18,8 +20,11 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    // LAYERS
    private Entity backgroundLayer;
    private Entity middlegroundEntity;
-   private Entity foregroundLayer;
+   private Entity foregroundLayer;      
    
+   //SRPITES
+   private Sprite gameTitle;   
+      
    private GameState gameState;
 
    @Override
@@ -32,6 +37,7 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    @Override
    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {      
       initLayers();
+      initSprites();
       
       pOnCreateResourcesCallback.onCreateResourcesFinished();
    }
@@ -40,6 +46,12 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
       backgroundLayer      = new Entity();
       middlegroundEntity   = new Entity();
       foregroundLayer      = new Entity();
+   }      
+   
+   private void initSprites() {
+      ResourceManager.getInstance().load(this, getEngine());
+      
+      gameTitle = new Sprite(0, 0, ResourceManager.getInstance().getGameTitleTextureRegion(), getVertexBufferObjectManager());
    }
 
    @Override
@@ -52,6 +64,8 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    @Override
    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
       attachLayersToScene(pScene);
+                  
+      attachObjectsToMiddlegroundLayer();
       
       pOnPopulateSceneCallback.onPopulateSceneFinished();
    }
@@ -60,6 +74,15 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
       scene.attachChild(backgroundLayer);
       scene.attachChild(middlegroundEntity);
       scene.attachChild(foregroundLayer);
+   }
+   
+   private void attachObjectsToMiddlegroundLayer() {
+      middlegroundEntity.attachChild(gameTitle);
+      
+      gameTitle.setWidth   (400);
+      gameTitle.setHeight  (100);
+      gameTitle.setX       (40);
+      gameTitle.setY       (100);
    }
 
    @Override
