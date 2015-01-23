@@ -13,8 +13,7 @@ public class ResourceManager {
    private static ResourceManager instance;
    
    //BITMAP_ATLASES
-   private BitmapTextureAtlas       gameTitleBitmapTextureAtlas;
-   private BitmapTextureAtlas       startBtnTextureAtlas;
+   private BitmapTextureAtlas       mainMenuTextureAtlas;
    
    //TEXTURE_REGIONS
    private TextureRegion            gameTitleTextureRegion;
@@ -32,14 +31,12 @@ public class ResourceManager {
    }
    
    public void load(Context context, Engine engine) {   
-      gameTitleBitmapTextureAtlas   = new BitmapTextureAtlas(engine.getTextureManager(), 32, 32);
-      startBtnTextureAtlas          = new BitmapTextureAtlas(engine.getTextureManager(), 256, 64);
+      mainMenuTextureAtlas          = new BitmapTextureAtlas(engine.getTextureManager(), 256, 128);
       
-      gameTitleTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(      gameTitleBitmapTextureAtlas,  context.getAssets(), "gfx/face_box.png",     0,    0);
-      startButtonTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset( startBtnTextureAtlas,         context.getAssets(), "gfx/start_btn.png",    0,    0,    2,    1);
+      gameTitleTextureRegion     = BitmapTextureAtlasTextureRegionFactory.createFromAsset(      mainMenuTextureAtlas,         context.getAssets(), "gfx/views/main_menu/game_title.png",     0,    0);
+      startButtonTextureRegion   = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset( mainMenuTextureAtlas,         context.getAssets(), "gfx/views/main_menu/start_btn.png",    0,    64,    2,    1);
       
-      gameTitleBitmapTextureAtlas.load();
-      startBtnTextureAtlas.load();
+      mainMenuTextureAtlas.load();
    }
    
    public TextureRegion getGameTitleTextureRegion() {
