@@ -4,16 +4,20 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import ru.majestic.microracing.activities.controllers.GameStateController;
+import android.util.Log;
+
 import ru.majestic.microracing.andengine.GameCamera;
 import ru.majestic.microracing.andengine.GameEngineOptions;
 import ru.majestic.microracing.andengine.GameScene;
 import ru.majestic.microracing.resources.ResourceManager;
+import ru.majestic.microracing.view.MainMenuStartBtn;
 import ru.majestic.microracing.view.MainMenuTitle;
 
-public class GameFieldActivity extends BaseGameActivity implements GameStateController {
+public class GameFieldActivity extends BaseGameActivity implements OnClickListener {
 
    private Camera camera;
 
@@ -23,7 +27,9 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    private Entity foregroundLayer;      
    
    //SRPITES
-   private MainMenuTitle mainMenuTitle;
+   private MainMenuTitle      mainMenuTitle;
+   private MainMenuStartBtn   mainMenuStartBtn;
+   
       
    private GameState gameState;
 
@@ -51,7 +57,10 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    private void initViews() {
       ResourceManager.getInstance().load(this, getEngine());
       
-      mainMenuTitle = new MainMenuTitle(getEngine().getVertexBufferObjectManager());
+      mainMenuTitle     = new MainMenuTitle(getEngine().getVertexBufferObjectManager());
+      mainMenuStartBtn  = new MainMenuStartBtn(getEngine().getVertexBufferObjectManager());
+      
+      mainMenuStartBtn.setOnClickListener(this);
    }
 
    @Override
@@ -65,7 +74,10 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
       attachLayersToScene(pScene);
                   
-      attachObjectsToMiddlegroundLayer();
+      attachObjectsToMiddlegroundLayer ();
+      attachObjectsToForegroundLayer   ();
+   
+      pScene.registerTouchArea(mainMenuStartBtn);
       
       pOnPopulateSceneCallback.onPopulateSceneFinished();
    }
@@ -79,10 +91,16 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    private void attachObjectsToMiddlegroundLayer() {
       middlegroundEntity.attachChild(mainMenuTitle);            
    }
+   
+   private void attachObjectsToForegroundLayer() {
+      foregroundLayer.attachChild(mainMenuStartBtn);
+   }
 
    @Override
-   public void changeGameState(GameState gameState) {
-      this.gameState = gameState;
+   public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+      if(pButtonSprite == mainMenuStartBtn) {
+         Log.i("BUTTON", "Start pressed");
+      }
    }
 
 }
