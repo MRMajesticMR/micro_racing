@@ -14,8 +14,9 @@ import ru.majestic.microracing.andengine.GameCamera;
 import ru.majestic.microracing.andengine.GameEngineOptions;
 import ru.majestic.microracing.andengine.GameScene;
 import ru.majestic.microracing.resources.ResourceManager;
-import ru.majestic.microracing.view.MainMenuStartBtn;
-import ru.majestic.microracing.view.MainMenuTitle;
+import ru.majestic.microracing.view.intromenu.IntroMenuCurtain;
+import ru.majestic.microracing.view.mainmenu.MainMenuStartBtn;
+import ru.majestic.microracing.view.mainmenu.MainMenuTitle;
 
 public class GameFieldActivity extends BaseGameActivity implements OnClickListener {
 
@@ -30,6 +31,7 @@ public class GameFieldActivity extends BaseGameActivity implements OnClickListen
    private MainMenuTitle      mainMenuTitle;
    private MainMenuStartBtn   mainMenuStartBtn;
    
+   private IntroMenuCurtain introMenuLeftCurtain;
       
    private GameState gameState;
 
@@ -43,7 +45,8 @@ public class GameFieldActivity extends BaseGameActivity implements OnClickListen
    @Override
    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {      
       initLayers();
-      initViews();
+//      initViews();
+      initIntroMenuViews();
       
       pOnCreateResourcesCallback.onCreateResourcesFinished();
    }
@@ -61,6 +64,14 @@ public class GameFieldActivity extends BaseGameActivity implements OnClickListen
       mainMenuStartBtn  = new MainMenuStartBtn(getEngine().getVertexBufferObjectManager());
       
       mainMenuStartBtn.setOnClickListener(this);
+   }
+   
+   private void initIntroMenuViews() {
+      ResourceManager.getInstance().load(this, getEngine());
+      
+      introMenuLeftCurtain = new IntroMenuCurtain(getEngine().getVertexBufferObjectManager());
+      introMenuLeftCurtain.setX(0);
+      introMenuLeftCurtain.setY(0);
    }
 
    @Override
@@ -89,11 +100,12 @@ public class GameFieldActivity extends BaseGameActivity implements OnClickListen
    }
    
    private void attachObjectsToMiddlegroundLayer() {
-      middlegroundEntity.attachChild(mainMenuTitle);            
+//      middlegroundEntity.attachChild(mainMenuTitle);
+      middlegroundEntity.attachChild(introMenuLeftCurtain);
    }
    
    private void attachObjectsToForegroundLayer() {
-      foregroundLayer.attachChild(mainMenuStartBtn);
+//      foregroundLayer.attachChild(mainMenuStartBtn);
    }
 
    @Override

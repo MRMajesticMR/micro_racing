@@ -1,4 +1,4 @@
-package ru.majestic.microracing.view;
+package ru.majestic.microracing.view.mainmenu;
 
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
