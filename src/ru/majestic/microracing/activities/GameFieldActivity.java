@@ -4,7 +4,6 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import ru.majestic.microracing.activities.controllers.GameStateController;
@@ -12,6 +11,7 @@ import ru.majestic.microracing.andengine.GameCamera;
 import ru.majestic.microracing.andengine.GameEngineOptions;
 import ru.majestic.microracing.andengine.GameScene;
 import ru.majestic.microracing.resources.ResourceManager;
+import ru.majestic.microracing.view.MainMenuTitle;
 
 public class GameFieldActivity extends BaseGameActivity implements GameStateController {
 
@@ -23,7 +23,7 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    private Entity foregroundLayer;      
    
    //SRPITES
-   private Sprite gameTitle;   
+   private MainMenuTitle mainMenuTitle;
       
    private GameState gameState;
 
@@ -37,7 +37,7 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    @Override
    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {      
       initLayers();
-      initSprites();
+      initViews();
       
       pOnCreateResourcesCallback.onCreateResourcesFinished();
    }
@@ -48,10 +48,10 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
       foregroundLayer      = new Entity();
    }      
    
-   private void initSprites() {
+   private void initViews() {
       ResourceManager.getInstance().load(this, getEngine());
       
-      gameTitle = new Sprite(0, 0, ResourceManager.getInstance().getGameTitleTextureRegion(), getVertexBufferObjectManager());
+      mainMenuTitle = new MainMenuTitle(getEngine().getVertexBufferObjectManager());
    }
 
    @Override
@@ -77,12 +77,7 @@ public class GameFieldActivity extends BaseGameActivity implements GameStateCont
    }
    
    private void attachObjectsToMiddlegroundLayer() {
-      middlegroundEntity.attachChild(gameTitle);
-      
-      gameTitle.setWidth   (400);
-      gameTitle.setHeight  (100);
-      gameTitle.setX       (40);
-      gameTitle.setY       (100);
+      middlegroundEntity.attachChild(mainMenuTitle);            
    }
 
    @Override
